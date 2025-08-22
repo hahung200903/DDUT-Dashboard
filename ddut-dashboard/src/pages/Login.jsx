@@ -1,87 +1,97 @@
-import React from "react";
-import dutBackground from "../assets/dut-background.png";
-import image from "./image.png";
-import inputConfigurator from "./input-configurator.png";
-import logo from "./logo.png";
-import ngNhP from "./ng-nh-p.svg";
-import "./style.css";
 
-export const Login = () => {
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
+import logo from "../assets/logo-dut.png";
+import background from "../assets/dut-background.png";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
+export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Simple validation - in real app you'd validate against backend
+    if (formData.username && formData.password) {
+      // Navigate to dashboard
+      navigate('/dashboard');
+    } else {
+      alert('Vui lòng nhập tên đăng nhập và mật khẩu');
+    }
+  };
+
   return (
-    <div className="login">
-      <div className="sign-in-form-desktop-wrapper">
-        <div className="sign-in-form-desktop">
-          <img
-            className="dut-background"
-            alt="Dut background"
-            src={dutBackground}
-          />
+    <div className="login-container">
+      <div className="login-left" style={{ backgroundImage: `url(${background})` }}></div>
 
-          <div className="frame">
-            <div className="div">
-              <div className="frame-2">
-                <div className="UI-unicorn-logo">
-                  <img className="logo" alt="Logo" src={logo} />
-                </div>
+      <div className="login-right">
+        <div className="login-box">
+          <div className="header">
+            <img src={logo} alt="DUT Logo" className="logo" />
+            <span className="dashboard-title">DDUT Dashboard</span>
+          </div>
 
-                <div className="text-wrapper">DDUT Dashboard</div>
+          <h3 className="subtitle">Đăng nhập</h3>
 
-                <div className="BG-tab-switcher" />
-              </div>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Tên đăng nhập</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="Tên đăng nhập"
+                value={formData.username}
+                onChange={handleInputChange}
+              />
+            </div>
 
-              <div className="sign-in-forms">
-                <div className="sign-in-form-web">
-                  <div className="frame-3">
-                    <div className="element">Đăng nhập</div>
-
-                    <div className="frame-4">
-                      <div className="frame-5">
-                        <div className="input-configurator">
-                          <img
-                            className="img"
-                            alt="Input configurator"
-                            src={inputConfigurator}
-                          />
-                        </div>
-
-                        <div className="input-configurator">
-                          <img
-                            className="img"
-                            alt="Input configurator"
-                            src={image}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="frame-6">
-                        <div className="switcher-item-left">
-                          <div className="switcher">
-                            <div className="knob-icon">
-                              <div className="knob" />
-                            </div>
-                          </div>
-
-                          <div className="description">Remember me</div>
-                        </div>
-
-                        <div className="description-2">Forgot password?</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <img className="ng-nhp" alt="Ng nhp" src={ngNhP} />
-
-                  <div className="nav" />
-                </div>
+            <div className="form-group">
+              <label>Mật khẩu</label>
+              <div className="password-field">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Mật khẩu"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                />
+                <span
+                  className="toggle-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </span>
               </div>
             </div>
 
-            <div className="frame-7" />
-          </div>
+            <div className="form-options">
+              <label>
+                <input type="checkbox" />
+                Remember me
+              </label>
+              <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="submit" className="btn-login">
+              Đăng nhập
+            </button>
+          </form>
         </div>
       </div>
     </div>
   );
-};
-
-export default Login;
+}

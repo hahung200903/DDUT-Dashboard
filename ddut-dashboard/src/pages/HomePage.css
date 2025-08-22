@@ -1,0 +1,89 @@
+/* Layout helpers */
+.chart-container {
+  width: 100%;
+  height: 350px;
+  position: relative;
+}
+
+.chart-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Global font smoothing */
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Custom scrollbar for sidebar */
+.MuiDrawer-paper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.MuiDrawer-paper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.MuiDrawer-paper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.MuiDrawer-paper::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Softer card hover to mimic mock */
+.MuiCard-root {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Disable heavy line-draw animation for subtle feel */
+.chart-svg path {
+  transition: stroke 0.2s ease;
+}
+
+/* Subtle point fade-in */
+.chart-svg circle {
+  opacity: 0.95;
+}
+
+/* Search bar focus */
+.MuiTextField-root .MuiOutlinedInput-root:focus-within {
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+}
+
+/* Stat card number animation */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.MuiTypography-h4 {
+  animation: countUp 0.8s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 250px;
+  }
+
+  .chart-svg text {
+    font-size: 10px;
+  }
+}
